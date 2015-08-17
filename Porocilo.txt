@@ -1,0 +1,37 @@
+Mojo rešitev je izvedena v Python-u, kar omogoča preprosto namestitev, 
+bogate knjižnice, dovolj hitro izvajanje in mogoče tudi lažje prirejanje
+programa za druge operacijske sisteme.
+
+Rešitev je modularna. Ethernet.connection omogoča pošiljanje ethernet 
+paketkov. Ethernet.arp, ipv4 in tcp so razredi, ki predstavljajo paketke
+nekaterih protokolov za lažje pošiljanje. To uporabljata razreda 
+ethernet.arpscan, ki skenira mrežo z arp request-i, in 
+ethernet.arpspoof, ki omogoča poljubno preusmerjanje poti paketkov 
+znotraj ethernet omrežja. To dopolnjujeta še ethernet.interfaces, ki 
+zagotavlja podatke o mrežnih vmesnikih in ethernet.httpredirect ter 
+ethernet.httprequest, ki omogočata procesiranje in sestavljanje 
+potrebnih http header-jev.
+
+Na vsem tem temeljijo skripte arp-dos.py, arp-scan.py, 
+list-interfaces.py in sendvic.py, ki uporabniku omogočajo pridobivanje 
+podatkov o mreži in izvajanje dos in mitm napadov. 
+
+Ethernet.arpspoof zagotavlja veliko zanesljivost lažnih naslovov, saj 
+pošilja celotno lažno arp tabelo vsako sekundo in se lažno odziva na vse
+arp zahtevke. Po daljšem testiranju je bilo namreč ugotovljeno, da samo 
+odgovarjanje na arp zahtevke ali samo pošiljanje ne da dovolj dobrih 
+rezultatov (za več glej zapisnik.odt).
+
+Ključne besede program išče v poti in POST poljih HTTP zahtevka, kar 
+omogoča preusmerjanje ob pojavu ključne besede v URL-naslovu in v GET 
+ali POST obrazcih. Presledki se lahko pojavljajo v treh oblikah 
+('%20', '+', ' '), program išče vse tri verzije.
+
+Za preusmerjanje paketkov se privzeto uporablja 
+'/proc/sys/net/ipv4/ip_forward', kar omogoča precej boljšo pretočnost, 
+vendar včasih (zelo redko) HTTP preusmeritev ne uspe, zato obstaja 
+možnost uporabe preusmerjanja paketkov v programu. Za primerjavo 
+pretočnosti glej zapisnik.odt.
+
+Program je bil testiran na 2 Ubuntu računalnikih
+in 2 routerjih: Cisco Linksys E900 z dd-wrt in Ubuntu server.

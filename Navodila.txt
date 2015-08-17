@@ -1,0 +1,66 @@
+Namestitev
+========================================================================
+Za uporaba programa potrebujete Linux z nameščenim Python 2.7 in 
+setuptools. 
+
+Namestitev na ubuntu:
+sudo apt-get install python python-setuptools
+
+Drugače pa prenesete python tukaj:
+http://www.python.org/download/
+In setuptools tukaj:
+https://pypi.python.org/pypi/setuptools#installation-instructions
+
+Za namestitev zaženite setup.py:
+sudo ./setup.py install
+------------------------------------------------------------------------
+Uporaba
+========================================================================
+sudo sendvic.py redirect keyword(s)
+Izvede man-in-the-middle napad. Preusmeri promet med napravami in
+gateway-om na ta računalnik, analizira vse paketke. Če naleti na
+keyword v GET ali POST zahtevku naredi HTTP 302 preusmeritev na
+redirect.
+
+Primer zahtevan v tekmovanju:
+sudo sendvic.py http://www.nil.si nil "programerski izziv"
+Preusmeri na http://www.nil.si če najde besedi 'nil' ali 'programerski
+izziv'.
+
+Dodatne možnosti:
+--help
+Prikaže vse možnosti uproabe.
+--no-redirect [NO_REDIRECT ...]
+Ne preusmeri če je request na teh domenah. Privzeto je to domena
+redirect naslova in google-analytics.com.
+--target [TARGET ...]
+Promet katerih naprav naj se preverja.
+--interface INTERFACE
+Ime mrežnega vmesnika na katerem se izvede napad. Privzeto je eth0.
+--permanent
+Izvede HTTP 301 preusmeritev namesto 302.
+--no-ip-forward
+Ne uporabi '/proc/sys/net/ipv4/ip_forward' za presumerjevanje paketkov.
+Posledica je manjši bandwidth, ker vse paketke preusmerja program,
+vendar ni možnosti da prileti kakšen paketek nazaj preden naredimo
+preusmeritev.
+--verbose
+Izpiše več podatkov o poteku programa.
+--requests
+Izpiše vse http requeste, ki jih sprocesira.
+
+------------------------------------------------------------------------
+Drugi ukazi:
+========================================================================
+list-interfaces.py [interface(s)]
+Prikaže podatke (mac, ip naslovi) o mrežnih vmesnikih. Kot argument 
+lahko podamo ime/imena vmesnikov.
+------------------------------------------------------------------------
+sudo arp-scan.py interface(s)
+Izvede arp skeniranje omrežja na podani/h mrežni vmesnikih in prikaže
+IP in MAC naslove aktivnih naprav.
+------------------------------------------------------------------------
+sudo arp-dos.py interface [target(s)]
+Izvede denial-of-service napad na mrežnem vmesniku na vseh oz podanih
+napravah. 
+------------------------------------------------------------------------
